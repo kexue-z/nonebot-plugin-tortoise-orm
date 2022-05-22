@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-tortoise-orm"
-version = "0.0.1a1"
+version = "0.0.1a2"
 description = "一个通用数据库连接插件"
 authors = ["kexue <x@kexue.io>"]
 license = "MIT"
