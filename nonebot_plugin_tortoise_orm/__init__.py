@@ -13,8 +13,10 @@ moduls = []
 @driver.on_startup
 async def connect():
     await Tortoise.init(db_url=db_config.db_url, modules={"models": moduls})
-    await Tortoise.generate_schemas()
     logger.opt(colors=True).success("<y>数据库: 连接成功</y>")
+    if db_config.db_generate_schemas:
+        logger.opt(colors=True).success("<y>数据库: 初始化</y>")
+        await Tortoise.generate_schemas()
 
 
 @driver.on_shutdown
