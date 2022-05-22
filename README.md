@@ -51,13 +51,6 @@ db_url=mysql://myuser:mypass:pass@db.host:3306/somedb
 
 跟上面的差不多
 
-### `db_generate_schemas`
-
-- 填入 `true` 或 `false`
-- 默认 `false`
-- 如为 `true` 则会在每次启动时，在空的数据库上初始化数据表
-  - 请在**第一次启动**或**有新数据表**时设置为 `true` 来初始化表，随后设置为`false` 关闭该功能
-
 ## 数据库类型
 
 - [x] postgres
