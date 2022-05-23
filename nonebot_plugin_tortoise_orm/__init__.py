@@ -33,4 +33,5 @@ async def disconnect():
 
 
 def add_model(model: str):
+    logger.opt(colors=True).success(f"<y>数据库: 添加模型</y>: <r>{model}</r>")
     moduls.append(model)
