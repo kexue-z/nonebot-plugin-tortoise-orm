@@ -1,7 +1,5 @@
 # 通用 ORM 数据库连接插件
 
-> 施工中。。。
-
 - 参考 [example_bot](example_bot) 来创建一个 _聊天记录_ 插件吧~！
 
 ## `.env` 设置
@@ -11,7 +9,6 @@
 ```ini
 # db_url=postgres://postgres@localhost:5432/postgres
 db_url=sqlite://db.sqlite3
-db_generate_schemas=false
 ```
 
 ### `db_url`
@@ -46,7 +43,7 @@ db_url=postgres://postgres:pass@db.host:5432/somedb
 #### 使用 `MySQL/MariaDB`
 
 ```ini
-db_url=mysql://myuser:mypass:pass@db.host:3306/somedb
+db_url=mysql://myuser:mypass@db.host:3306/somedb
 ```
 
 跟上面的差不多
