@@ -2,6 +2,73 @@
 
 - 参考 [example_bot](example_bot) 来创建一个 _聊天记录_ 插件吧~！
 
+# 快速上手
+
+## 新建 `models.py`
+
+```python
+from tortoise import fields
+from tortoise.models import Model
+
+
+class TestTable(Model):
+    message_id = fields.BigIntField(pk=True)
+    text = felis.TextField()
+
+
+    class Meta:
+        table = "test_table"
+        table_description = "测试标题" # 可选
+```
+
+## 在 `__init__.py` 中加入模型
+
+```python
+from nonebot import require
+
+require("nonebot_plugin_tortoise_orm")
+from nonebot_plugin_tortoise_orm import add_model
+
+# 插件存放结构
+# src/plugins/__init__.py
+# src/plugins/models.py
+add_model("src.plugin.models")
+
+# 如果以包进行安装，例如 nonebot_plugin_word_bank3
+# add_model("nonebot_plugin_word_bank3.models")
+
+from .models import TestTable
+```
+
+## 直接使用
+
+参考 [tortoise models](https://tortoise.github.io/models.html)
+
+```python
+# 创建
+await TestTable.create(message_id=114514)
+await TestTable.update_or_create(message_id=114514)
+await TestTable.get_or_create(message_id=114514)
+
+# 获取
+await TestTable.get(message_id=114514)
+await TestTable.get_or_none(message_id=114514)
+
+# 更改
+if record := await TestTable.get_or_none(message_id=114514):
+    record.text = "1919810"
+    await record.save()
+
+# 删除
+if record := await TestTable.get_or_none(message_id=114514):
+    await record.delete()
+    await record.save()
+```
+
+以上就是最简用法
+
+# 配置
+
 ## `.env` 设置
 
 参考配置：
