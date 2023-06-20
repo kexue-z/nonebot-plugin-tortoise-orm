@@ -3,10 +3,21 @@ from typing import List
 from nonebot import require, get_driver
 from tortoise import Tortoise
 from nonebot.log import logger
+from nonebot.plugin import PluginMetadata
 
-from .config import DB_URL
+from .config import DB_URL, Config
 
 require("nonebot_plugin_localstore")
+
+__plugin_meta__ = PluginMetadata(
+    name="nonebot_plugin_tortoise_orm",
+    description="Tortoise ORM 插件",
+    usage="看文档",
+    type="library",
+    homepage="https://github.com/kexue-z/nonebot-plugin-tortoise-orm",
+    config=Config,
+)
+
 driver = get_driver()
 
 moduls: List[str] = []
