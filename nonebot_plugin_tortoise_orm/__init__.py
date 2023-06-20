@@ -27,7 +27,9 @@ moduls: List[str] = []
 async def connect():
     await Tortoise.init(db_url=DB_URL, modules={"models": moduls})
     await Tortoise.generate_schemas()
-    logger.opt(colors=True).success("<y>数据库: 连接成功</y>")
+    logger.opt(colors=True).success(
+        f"<y>数据库: 连接成功</y> URL: <r>{DB_URL.split('@',maxsplit=1)[-1]}</r>"
+    )
 
 
 @driver.on_shutdown

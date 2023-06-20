@@ -7,7 +7,7 @@ from nonebot_plugin_localstore import get_data_dir
 
 
 class Config(BaseModel, extra=Extra.ignore):
-    db_url: str | None
+    db_url: str
 
     @root_validator(pre=True, allow_reuse=True)
     def set_default(cls, value: Dict):
