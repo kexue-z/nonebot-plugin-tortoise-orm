@@ -1,6 +1,6 @@
 [project]
 name = "nonebot-plugin-tortoise-orm"
-version = "0.1.0.beta.2"
+version = "0.1.0"
 description = "一个通用数据库连接插件"
 authors = [
     {name = "kexue", email = "xana278@foxmail.com"},

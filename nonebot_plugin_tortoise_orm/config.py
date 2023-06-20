@@ -1,4 +1,5 @@
 from typing import Dict
+from pathlib import Path
 
 from nonebot import get_driver
 from pydantic import Extra, BaseModel, root_validator
@@ -14,6 +15,12 @@ class Config(BaseModel, extra=Extra.ignore):
         if not value.get("db_url"):
             value["db_url"] = f'sqlite:///{get_data_dir("") / "db.sqlite3"}'
             logger.warning(f"没有设置数据库地址, 使用 {value['db_url']}")
+
+            if Path("db.sqlite3").exists():
+                logger.warning("使用了旧版 db.sqlite3")
+                logger.warning("为了防止数据丢失, 保留使用 db.sqlite3")
+                logger.warning(f'请将sqlite移到 {get_data_dir("") / "db.sqlite3"}')
+                value["db_url"] = "sqlite://db.sqlite3"
 
         return value
 
