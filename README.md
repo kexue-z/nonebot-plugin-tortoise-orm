@@ -13,7 +13,7 @@ from tortoise.models import Model
 
 class TestTable(Model):
     message_id = fields.BigIntField(pk=True)
-    text = felis.TextField()
+    text = fields.TextField()
 
 
     class Meta:
