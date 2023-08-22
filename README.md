@@ -1,16 +1,45 @@
-# 通用 ORM 数据库连接插件
+<p align="center">
+  <a href="https://v2.nonebot.dev/store"><img src="https://user-images.githubusercontent.com/44545625/209862575-acdc9feb-3c76-471d-ad89-cc78927e5875.png" width="180" height="180" alt="NoneBotPluginLogo"></a>
+</p>
+
+<div align="center">
+
+# nonebot-plugin-tortoise-orm
+
+_✨ 通用 ORM 数据库连接插件 ✨_
+
+</div>
+
+<p align="center">
+  <a href="https://raw.githubusercontent.com/kexue-z/nonebot-plugin-tortoise-orm/master/LICENSE">
+    <img src="https://img.shields.io/github/license/kexue-z/nonebot-plugin-tortoise-orm.svg" alt="license">
+  </a>
+  <a href="https://pypi.org/project/nonebot-plugin-tortoise-orm/">
+    <img src="https://img.shields.io/pypi/v/nonebot-plugin-tortoise-orm" alt="pypi">
+  </a>
+  <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="python">
+</p>
+
 
 - 参考 [example_bot](example_bot) 来创建一个 _聊天记录_ 插件吧~！
 
-# 快速上手
+## 快速上手
 
-## 新建 `models.py`
+### 新建 `models.py`
 
 ```python
 from tortoise import fields
 from tortoise.models import Model
 
+# 导入插件方法
+from nonebot_plugin_tortoise_orm import add_model
 
+
+add_model("src.plugins.models")
+# 如果以包/插件的方式，例如 nonebot_plugin_word_bank3
+# add_model("nonebot_plugin_word_bank3.models")
+# 或
+# add_model("__name__")
 class TestTable(Model):
     message_id = fields.BigIntField(pk=True)
     text = fields.TextField()
@@ -21,26 +50,21 @@ class TestTable(Model):
         table_description = "测试标题" # 可选
 ```
 
-## 在 `__init__.py` 中加入模型
+### 在 `__init__.py` 中加入引用
 
 ```python
 from nonebot import require
 
 require("nonebot_plugin_tortoise_orm")
-from nonebot_plugin_tortoise_orm import add_model
 
 # 插件存放结构
 # src/plugins/__init__.py
 # src/plugins/models.py
-add_model("src.plugin.models")
-
-# 如果以包进行安装，例如 nonebot_plugin_word_bank3
-# add_model("nonebot_plugin_word_bank3.models")
 
 from .models import TestTable
 ```
 
-## 直接使用
+### 直接使用
 
 参考 [tortoise models](https://tortoise.github.io/models.html)
 
@@ -67,11 +91,27 @@ if record := await TestTable.get_or_none(message_id=114514):
 
 以上就是最简用法
 
-# 配置
+### 多个数据库
+
+在某些特殊情况下，可以不使用默认数据库，`add_model` 的参数即可实现
+
+- `db_name` 自行确认
+- `db_url` 地址同下数据库URL
+
+
+```py
+add_model(
+    __name__,
+    db_name="chatrecorder",
+    db_url="sqlite://data/chatrecorder.db",
+)
+```
 
 ## `.env` 设置
 
 参考配置：
+
+[db-url](https://tortoise.github.io/databases.html#db-url)
 
 ```ini
 # db_url=postgres://postgres@localhost:5432/postgres
