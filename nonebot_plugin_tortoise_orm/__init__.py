@@ -1,14 +1,17 @@
-from nonebot import require, get_driver
+from nonebot import get_driver, require
 
 require("nonebot_plugin_localstore")
 from json import dumps
+from pathlib import Path
 from typing import List, Optional
 
-from tortoise import Tortoise
+import nonebot_plugin_localstore as store
+from nonebot import get_plugin_config
 from nonebot.log import logger
 from nonebot.plugin import PluginMetadata
+from tortoise import Tortoise
 
-from .config import DB_URL, Config
+from .config import Config
 
 __plugin_meta__ = PluginMetadata(
     name="nonebot_plugin_tortoise_orm",
@@ -19,11 +22,25 @@ __plugin_meta__ = PluginMetadata(
     config=Config,
 )
 
+plugin_config = get_plugin_config(Config)
+
+plugin_data_file: Path = store.get_data_file(
+    "nonebot_plugin_tortoise_orm", "db.sqlite3"
+)
+
+
+db_url = (
+    "sqlite:///" + str(plugin_data_file)
+    if plugin_config.tortoise_orm_db_url is None
+    else plugin_config.tortoise_orm_db_url
+)
+
+
 driver = get_driver()
 
 
 DATABASE = {
-    "connections": {"default": DB_URL},
+    "connections": {"default": db_url},
     "apps": {
         "default": {
             "models": [],
@@ -49,7 +66,9 @@ async def connect():
 
     for db in DATABASE["connections"].keys():
         db_url = DATABASE["connections"][db].split("@", maxsplit=1)[-1]
-        logger.opt(colors=True).success(f"<y>数据库: {db} 连接成功</y> URL: <r>{db_url}</r>")
+        logger.opt(colors=True).success(
+            f"<y>数据库: {db} 连接成功</y> URL: <r>{db_url}</r>"
+        )
 
 
 @driver.on_shutdown
@@ -83,7 +102,9 @@ def add_model(model: str, db_name: Optional[str] = None, db_url: Optional[str] =
         DATABASE["apps"][db_name] = {"models": []}
         DATABASE["apps"][db_name]["default_connection"] = db_name
         DATABASE["apps"][db_name]["models"].append(model)
-        logger.opt(colors=True).success(f"<y>数据库: 添加模型 {db_name}</y>: <r>{model}</r>")
+        logger.opt(colors=True).success(
+            f"<y>数据库: 添加模型 {db_name}</y>: <r>{model}</r>"
+        )
 
     else:
         models.append(model)
