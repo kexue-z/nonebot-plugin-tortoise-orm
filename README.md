@@ -111,27 +111,27 @@ add_model(
 
 参考配置：
 
-[db-url](https://tortoise.github.io/databases.html#db-url)
+[tortoise_orm_db_url](https://tortoise.github.io/databases.html#db-url)
 
 ```ini
-# db_url=postgres://postgres@localhost:5432/postgres
-db_url=sqlite://db.sqlite3
+# tortoise_orm_db_url=postgres://postgres@localhost:5432/postgres
+tortoise_orm_db_url=sqlite://db.sqlite3
 ```
 
-### `db_url`
+### `tortoise_orm_db_url`
 
 #### 使用 `sqlite`
 
 直接使用相对路径来建立
 
 ```ini
-db_url=sqlite://db.sqlite3
+tortoise_orm_db_url=sqlite://db.sqlite3
 ```
 
 如果时指定路径，则应该是
 
 ```ini
-db_url=sqlite:///data/db.sqlite
+tortoise_orm_db_url=sqlite:///data/db.sqlite
 ```
 
 使用绝对路径 注意有三个 `/`
@@ -139,7 +139,7 @@ db_url=sqlite:///data/db.sqlite
 #### 使用 `PostgreSQL`
 
 ```ini
-db_url=postgres://postgres:pass@db.host:5432/somedb
+tortoise_orm_db_url=postgres://postgres:pass@db.host:5432/somedb
 ```
 
 - 说明： `postgres://` 表示协议
@@ -150,7 +150,7 @@ db_url=postgres://postgres:pass@db.host:5432/somedb
 #### 使用 `MySQL/MariaDB`
 
 ```ini
-db_url=mysql://myuser:mypass@db.host:3306/somedb
+tortoise_orm_db_url=mysql://myuser:mypass@db.host:3306/somedb
 ```
 
 跟上面的差不多
