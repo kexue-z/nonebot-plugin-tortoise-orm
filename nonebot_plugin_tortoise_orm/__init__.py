@@ -22,18 +22,16 @@ __plugin_meta__ = PluginMetadata(
     config=Config,
 )
 
-plugin_config = get_plugin_config(Config)
+plugin_config: Config = get_plugin_config(Config)
 
 plugin_data_file: Path = store.get_data_file(
     "nonebot_plugin_tortoise_orm", "db.sqlite3"
 )
 
-
-db_url = (
-    "sqlite:///" + str(plugin_data_file)
-    if plugin_config.tortoise_orm_db_url is None
-    else plugin_config.tortoise_orm_db_url
-)
+if plugin_config.tortoise_orm_db_url is None:
+    db_url = str(plugin_data_file.absolute())
+else:
+    db_url = str(plugin_config.tortoise_orm_db_url)
 
 
 driver = get_driver()
