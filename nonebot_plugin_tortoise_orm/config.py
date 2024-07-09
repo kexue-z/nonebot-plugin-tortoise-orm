@@ -1,8 +1,7 @@
-from pathlib import Path
-from typing import Optional, Union
+from typing import Optional
 
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel
 
 
-class Config(BaseModel, extra=Extra.ignore):
-    tortoise_orm_db_url: Optional[Union[Path, str]] = None
+class Config(BaseModel):
+    tortoise_orm_db_url: Optional[str] = None

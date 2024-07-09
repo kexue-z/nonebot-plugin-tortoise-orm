@@ -29,9 +29,9 @@ plugin_data_file: Path = store.get_data_file(
 )
 
 if plugin_config.tortoise_orm_db_url is None:
-    db_url = str(plugin_data_file.absolute())
+    db_url = "sqlite:///" + str(plugin_data_file.absolute())
 else:
-    db_url = str(plugin_config.tortoise_orm_db_url)
+    db_url = plugin_config.tortoise_orm_db_url
 
 
 driver = get_driver()
